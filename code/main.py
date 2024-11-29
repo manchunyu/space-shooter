@@ -1,4 +1,4 @@
-import os, sys, pygame
+import sys, pygame
 from random import randint
 
 
@@ -8,12 +8,11 @@ pygame.init()
 WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT) = (1280, 720)
 display_surface = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Space Shooter")
+clock = pygame.time.Clock()
 
 # Surface
-surf = pygame.Surface((100, 200))
-x = 50
 
-player_surf = pygame.image.load(os.path.join("..", "images", "player.png")).convert_alpha()
+player_surf = pygame.image.load("../images/player.png").convert_alpha()
 star = pygame.image.load("../images/star.png").convert_alpha()
 star_pos = [(randint(0, WINDOW_WIDTH), randint(0, WINDOW_HEIGHT)) for _ in range(20)]
 
@@ -30,6 +29,8 @@ while True:
     for pos in star_pos:
         display_surface.blit(star, pos)
 
-    display_surface.blit(player_surf, (x,50))
-    x += 0.01
+    display_surface.blit(player_surf, (0, 0))
+   
     pygame.display.flip()
+
+    clock.tick(60)
