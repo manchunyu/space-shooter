@@ -15,7 +15,8 @@ clock = pygame.time.Clock()
 player_surf = pygame.image.load("../images/player.png").convert_alpha()
 player_pos = [WINDOW_WIDTH / 2, WINDOW_HEIGHT/ 2]
 player_rect = player_surf.get_frect(center = player_pos)
-player_dir = 1
+# player_dir = pygame.math.Vector2(-1, -1)
+# player_speed = 1000
 
 meteor_surf = pygame.image.load("../images/meteor.png").convert_alpha()
 meteor_pos = [WINDOW_WIDTH / 2, WINDOW_HEIGHT/ 2]
@@ -29,12 +30,22 @@ star_pos = [(randint(0, WINDOW_WIDTH), randint(0, WINDOW_HEIGHT)) for _ in range
 
 
 while True:
-    
+    dt = clock.tick(60) / 1000
+
+    # Event Loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        # if event.type == pygame.KEYDOWN:
+        #     print(event.key)
+        # if event.type == pygame.MOUSEMOTION:
+        #     player_rect.center = event.pos
 
+    # Player input
+    player_rect.center = pygame.mouse.get_pos()
+
+    # Draw the game
     display_surface.fill("darkgray")
     
     for pos in star_pos:
@@ -42,17 +53,10 @@ while True:
     
     display_surface.blit(meteor_surf, meteor_rect)
     display_surface.blit(laser_surf, laser_rect)
-
     display_surface.blit(player_surf, player_rect)
-    
-    
 
-    if player_rect.right >= WINDOW_WIDTH or player_rect.left <= 0:
-        player_dir *= -1
 
-    player_rect.right += player_dir
-    
-   
+    # player_rect.center += player_dir * player_speed * dt
+
     pygame.display.flip()
 
-    clock.tick(60)
