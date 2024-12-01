@@ -16,7 +16,7 @@ player_surf = pygame.image.load("../images/player.png").convert_alpha()
 player_pos = [WINDOW_WIDTH / 2, WINDOW_HEIGHT/ 2]
 player_rect = player_surf.get_frect(center = player_pos)
 # player_dir = pygame.math.Vector2(-1, -1)
-# player_speed = 1000
+# player_speed = 10
 
 meteor_surf = pygame.image.load("../images/meteor.png").convert_alpha()
 meteor_pos = [WINDOW_WIDTH / 2, WINDOW_HEIGHT/ 2]
@@ -44,7 +44,7 @@ while True:
 
     # Player input
     player_rect.center = pygame.mouse.get_pos()
-
+    
     # Draw the game
     display_surface.fill("darkgray")
     
