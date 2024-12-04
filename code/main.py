@@ -15,8 +15,8 @@ clock = pygame.time.Clock()
 player_surf = pygame.image.load("../images/player.png").convert_alpha()
 player_pos = [WINDOW_WIDTH / 2, WINDOW_HEIGHT/ 2]
 player_rect = player_surf.get_frect(center = player_pos)
-# player_dir = pygame.math.Vector2(-1, -1)
-# player_speed = 10
+player_dir = pygame.math.Vector2() # Default 0,0
+player_speed = 300
 
 meteor_surf = pygame.image.load("../images/meteor.png").convert_alpha()
 meteor_pos = [WINDOW_WIDTH / 2, WINDOW_HEIGHT/ 2]
@@ -37,13 +37,21 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        # if event.type == pygame.KEYDOWN:
-        #     print(event.key)
-        # if event.type == pygame.MOUSEMOTION:
-        #     player_rect.center = event.pos
 
     # Player input
-    player_rect.center = pygame.mouse.get_pos()
+    keys = pygame.key.get_pressed()
+    
+    
+    player_dir.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
+    player_dir.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
+    player_dir = player_dir.normalize() if player_dir else player_dir
+    
+    if pygame.key.get_just_pressed()[pygame.K_SPACE]:
+        print("Fire!")
+        
+    
+    player_rect.center +=  player_dir * player_speed * dt
+    
     
     # Draw the game
     display_surface.fill("darkgray")
